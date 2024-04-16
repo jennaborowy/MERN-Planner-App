@@ -12,7 +12,6 @@ function App() {
   } 
   return ( 
     <div> 
-      <h1 style={headStyle}>Todo List</h1> 
       <BrowserRouter> 
         <Routes> 
           <Route path='/' element={<Todo/>}></Route> 
