@@ -1,0 +1,76 @@
+body.dark {
+  background-color: #333;
+}
+
+/* Light theme styles for app */
+.app-container.light {
+  --fc-bg-color: white;
+  --fc-text-color: black;
+  --fc-border-color: gray;
+  --fc-day-bg-color: #f9f9f9;
+  --fc-day-text-color: black;
+  --fc-event-bg-color: #007bff;
+  --fc-event-text-color: white;
+  --fc-toolbar-bg-color: white;
+  background-color: white;
+}
+
+/* Dark theme styles for app */
+.app-container.dark {
+  --fc-bg-color: #333;
+  --fc-text-color: #ababab;
+  --fc-border-color: white;
+  --fc-day-bg-color: #444;
+  --fc-day-text-color: white;
+  --fc-event-bg-color: #007bff;
+  --fc-event-text-color: white;
+  --fc-toolbar-bg-color: #333;
+  background-color: #333;
+  color: #ababab;
+  margin-top: 2%;
+}
+
+/* light theme for input */
+input.form-control.light-mode {
+  background-color: white;
+  color: black;
+}
+
+/* dark theme for input */
+input.form-control.dark-mode {
+  background-color: #333;
+  color: #ababab
+}
+
+/* Styles for the theme toggle buttons */
+.theme-toggle {
+    display: flex;
+    justify-content: right;
+    margin-bottom: 20px;
+  }
+  
+  .toggle-button {
+    margin: 0 5px;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.5rem;
+    transition: background-color 0.3s;
+  }
+  
+  .toggle-button.active {
+    background-color: #007bff; /* Customize active button color */
+    color: white;
+  }
+  
+  .toggle-button:not(.active):hover {
+    background-color: #e0e0e0; /* Customize hover color */
+  }
+
+  /* Base style for FullCalendar */
+.fc {
+  background-color: var(--fc-bg-color);
+  color: var(--fc-text-color);
+  border-color: var(--fc-border-color);
+}

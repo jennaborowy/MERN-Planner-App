@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "mern project for cs456 that will start with a todo app tutorial and turn it into a planner app",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jennaborowy/MERN-webdev-project.git"
