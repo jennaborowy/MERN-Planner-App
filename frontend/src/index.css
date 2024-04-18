@@ -1,5 +1,16 @@
-body.dark {
-  background-color: #333;
+.gradient {
+  background-image: linear-gradient(to bottom, #ffffff, #b4b4b4);
+}
+
+.gradient.dark {
+  background-image: linear-gradient(to bottom, #434343, #1b1b1b);
+}
+
+.overflow-fix {
+  background-color: tansparent;
+  overflow: auto;
+  padding: 20px;
+  height: 80vh;
 }
 
 /* Light theme styles for app */
@@ -17,7 +28,7 @@ body.dark {
 
 /* Dark theme styles for app */
 .app-container.dark {
-  --fc-bg-color: #333;
+  --fc-bg-color: #222;
   --fc-text-color: #ababab;
   --fc-border-color: white;
   --fc-day-bg-color: #444;
@@ -30,47 +41,50 @@ body.dark {
   margin-top: 2%;
 }
 
-/* light theme for input */
-input.form-control.light-mode {
-  background-color: white;
-  color: black;
+.toggle-button.light {
+  margin: 0 px;
+  padding: 5px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1.5rem;
 }
 
-/* dark theme for input */
-input.form-control.dark-mode {
-  background-color: #333;
-  color: #ababab
+.toggle-button.dark {
+  margin: 0 5px;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1.5rem;
+  transition: background-color 0.3s;
+  background-color: #313131;
+  color: white;
+
 }
 
-/* Styles for the theme toggle buttons */
-.theme-toggle {
-    display: flex;
-    justify-content: right;
-    margin-bottom: 20px;
-  }
-  
-  .toggle-button {
-    margin: 0 5px;
-    padding: 10px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 1.5rem;
-    transition: background-color 0.3s;
-  }
-  
-  .toggle-button.active {
-    background-color: #007bff; /* Customize active button color */
-    color: white;
-  }
-  
-  .toggle-button:not(.active):hover {
-    background-color: #e0e0e0; /* Customize hover color */
-  }
+.theme-button:not(.active):hover {
+  background-color: #f0f0f0;
+}
+
+.theme-button.dark:not(.active):hover {
+  background-color: #444;
+}
 
   /* Base style for FullCalendar */
 .fc {
   background-color: var(--fc-bg-color);
   color: var(--fc-text-color);
   border-color: var(--fc-border-color);
+  border-radius: 10px;
+}
+
+.fc .fc-col-header-cell:first-child .fc-col-header-cell-cushion {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.fc .fc-col-header-cell:last-child .fc-col-header-cell-cushion {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
 }

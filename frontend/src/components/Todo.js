@@ -1,14 +1,16 @@
 import axios from "axios"; 
 import React from "react"; 
-import { useEffect, useState } from "react"; 
+import { useEffect, useState, useContext } from "react"; 
+import { ThemeContext, ThemeProvider } from "./ThemeContext";
 
-function Todo({theme}) { 
+function Todo() { 
     const [todoList, setTodoList] = useState([]); 
     const [editableId, setEditableId] = useState(null); 
     const [editedTask, setEditedTask] = useState(""); 
     const [editedStatus, setEditedStatus] = useState(""); 
     const [newTask, setNewTask] = useState(""); 
     const [newStatus, setNewStatus] = useState(""); 
+    const { theme } = useContext(ThemeContext);
     
     // Fetch tasks from database 
     useEffect(() => { 
@@ -35,20 +37,30 @@ function Todo({theme}) {
   
   
     // Function to add task to the database 
-    const addTask = (e) => { 
-        e.preventDefault(); 
-        if (!newTask || !newStatus ) { 
-            alert("All fields must be filled out."); 
-            return; 
-        } 
-  
-        axios.post('http://127.0.0.1:3001/addTodoList', { task: newTask, status: newStatus }) 
-            .then(res => { 
-                console.log(res); 
-                window.location.reload(); 
-            }) 
-            .catch(err => console.log(err)); 
-    } 
+    const addTask = (e) => {
+        e.preventDefault();
+        if (!newTask || !newStatus) {
+            alert('All fields must be filled out.');
+            return;
+        }
+
+        axios
+            .post('http://127.0.0.1:3001/addTodoList', { task: newTask, status: newStatus })
+            .then((res) => {
+                console.log(res);
+
+                // Update the task list state instead of reloading the page
+                // Fetch the updated task list from the server
+                axios.get('http://127.0.0.1:3001/getTodoList').then((result) => {
+                    setTodoList(result.data);
+                }).catch(err => console.log(err));
+
+                // Reset the form inputs
+                setNewTask('');
+                setNewStatus('');
+            })
+            .catch((err) => console.log(err));
+    };
   
     // Function to save edited data to the database 
     const saveEditedTask = (id) => { 
@@ -94,8 +106,8 @@ function Todo({theme}) {
                 <div className="col-md-7"> 
                     <h2 className="text-center">Todo List</h2> 
                     <div className="table-responsive"> 
-                        <table className="table table-bordered"> 
-                            <thead className="table-primary"> 
+                        <table className={`table table-bordered rounded`}> 
+                            <thead className={{theme}}> 
                                 <tr> 
                                     <th>Task</th> 
                                     <th>Status</th> 
@@ -103,14 +115,14 @@ function Todo({theme}) {
                                 </tr> 
                             </thead> 
                             {Array.isArray(todoList) ? ( 
-                                <tbody> 
+                                <tbody className="table-group-divider"> 
                                     {todoList.map((data) => ( 
                                         <tr key={data._id}> 
                                             <td> 
                                                 {editableId === data._id ? ( 
                                                     <input 
                                                         type="text"
-                                                        className="form-control"
+                                                        className={`form-control input ${theme}`} 
                                                         value={editedTask} 
                                                         onChange={(e) => setEditedTask(e.target.value)} 
                                                     /> 
@@ -163,11 +175,11 @@ function Todo({theme}) {
                 </div> 
                 <div className="col-md-5"> 
                     <h2 className="text-center">Add Task</h2> 
-                    <form className={`bg-${theme} p-4`}> 
+                    <form className={`border border-${theme} rounded p-4`}> 
                         <div className="mb-3"> 
                             <label>Task</label> 
                             <input 
-                                className={theme === "dark" ? "dark-mode" : "light-mode"}
+                                className="form-control"
                                 type="text"
                                 placeholder="Enter Task"
                                 onChange={(e) => setNewTask(e.target.value)} 

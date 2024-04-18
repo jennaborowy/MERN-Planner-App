@@ -1,49 +1,57 @@
 //App.js 
   
-import React, { useState, useContext } from 'react'; 
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'; 
+import React, { useContext, useEffect } from 'react'; 
+import { BrowserRouter, Routes, Route } from 'react-router-dom'; 
 import Todo from './components/Todo'; 
 import Calendar from "./components/Calendar";
 import ToggleButton from "./components/ToggleButton";
-import { ThemeProvider } from "./components/ThemeContext";
+import { ThemeContext } from "./components/ThemeContext";
 import 'bootstrap/dist/css/bootstrap.min.css'; 
-import 'bootstrap-icons/font/bootstrap-icons.css';
+import 'bootstrap-icons/font/bootstrap-icons.css'; // for sun and moon
 import './index.css';
   
 function App() { 
-  // light mode by default
-  const [theme, setTheme] = useState("light");
+  // have a theme context to be able to set theme for all comopnents
+  const { theme, toggleDark, toggleLight } = useContext(ThemeContext);
 
-  const handleThemeChange = (newTheme)  => {
-      setTheme(newTheme);
-  }
-
+  useEffect(() => {
+    document.documentElement.setAttribute('data-bs-theme', theme);
+  }, [theme]);
+  
   return ( 
-    <div className={`app-container ${theme}`}> 
-        <div className={`theme-toggle btn-group ${theme}`}>
-          <button
-            className={`toggle-button ${theme === 'light' ? 'active' : ''}`}
-            onClick={() => handleThemeChange('light')}
-          >
-            <i class="bi bi-sun"></i>
-          </button>
-          <button
-            className={`toggle-button ${theme === 'dark' ? 'active' : ''}`}
-            onClick={() => handleThemeChange('dark')}
-          >
-            <i className="bi bi-moon"></i>
-          </button>
-        </div>
-        <BrowserRouter> 
-            <div>
-                <ToggleButton />
-                <Routes> 
-                    <Route path='/' element={<Todo theme={theme}/>}/> 
-                    <Route path='/calendar' element={<Calendar className={theme}/>}/>        
-                </Routes> 
+    <div className={`gradient ${theme} vh-100`}>
+      <div className="overflow-fix" data-bs-theme={{theme}}> 
+        <BrowserRouter>
+          <div className="row">
+            <div className="mt-2 col">
+              <div className="btn-group rounded shadow">
+                <button
+                  className={` btn theme-button ${theme} `}
+                  onClick={toggleLight}
+                >
+                  <i class="bi bi-sun"></i>
+                </button>
+                <button
+                  className={`btn theme-button ${theme}`}
+                  onClick={toggleDark}
+                >
+                  <i className="bi bi-moon"></i>
+                </button>
+              </div>
             </div>
-        </BrowserRouter> 
-    </div> 
+            <div className="col d-flex justify-content-end">
+              <ToggleButton />
+            </div>
+          </div>
+          <div className="row">
+            <Routes>
+              <Route path="/" element={<Todo />} />
+              <Route path="/calendar" element={<Calendar />} />
+            </Routes>
+          </div>
+        </BrowserRouter>
+      </div>
+    </div>
   ); 
 } 
   

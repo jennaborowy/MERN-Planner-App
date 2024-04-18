@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { ThemeContext } from './ThemeContext';
 import { useLocation, Link } from 'react-router-dom';
 
 const ToggleButton = () => {
   const location = useLocation(); // Get the current location
+  const { theme } = useContext(ThemeContext);
 
   // Determine the button text based on the current path
   const buttonText = location.pathname === '/calendar' ? 'Todo List' : 'Calendar';
@@ -10,7 +12,7 @@ const ToggleButton = () => {
 
   return (
     <Link to={targetPath}>
-      <button className="toggle-button">
+      <button className={`shadow btn mt-2 ${theme}`}>
         {buttonText}
       </button>
     </Link>
