@@ -1,15 +1,13 @@
 import axios from "axios"; 
 import React from "react"; 
 import { useEffect, useState, useContext } from "react"; 
-import { ThemeContext, ThemeProvider } from "./ThemeContext";
+import { ThemeContext } from "./ThemeContext";
 
 function Todo() { 
     const [todoList, setTodoList] = useState([]); 
     const [editableId, setEditableId] = useState(null); 
     const [editedTask, setEditedTask] = useState(""); 
-    const [editedStatus, setEditedStatus] = useState(""); 
     const [newTask, setNewTask] = useState(""); 
-    const [newStatus, setNewStatus] = useState(""); 
     const { theme } = useContext(ThemeContext);
     
     // Fetch tasks from database 
@@ -27,11 +25,11 @@ function Todo() {
         if (rowData) { 
             setEditableId(id); 
             setEditedTask(rowData.task); 
-            setEditedStatus(rowData.status); 
+            
         } else { 
             setEditableId(null); 
             setEditedTask(""); 
-            setEditedStatus(""); 
+            
         } 
     }; 
   
@@ -39,13 +37,13 @@ function Todo() {
     // Function to add task to the database 
     const addTask = (e) => {
         e.preventDefault();
-        if (!newTask || !newStatus) {
+        if (!newTask) {
             alert('All fields must be filled out.');
             return;
         }
 
         axios
-            .post('http://127.0.0.1:3001/addTodoList', { task: newTask, status: newStatus })
+            .post('http://127.0.0.1:3001/addTodoList', { task: newTask, completed: false })
             .then((res) => {
                 console.log(res);
 
@@ -57,7 +55,6 @@ function Todo() {
 
                 // Reset the form inputs
                 setNewTask('');
-                setNewStatus('');
             })
             .catch((err) => console.log(err));
     };
@@ -65,12 +62,11 @@ function Todo() {
     // Function to save edited data to the database 
     const saveEditedTask = (id) => { 
         const editedData = { 
-            task: editedTask, 
-            status: editedStatus, 
+            task: editedTask,  
         }; 
   
         // If the fields are empty 
-        if (!editedTask || !editedStatus ) { 
+        if (!editedTask) { 
             alert("All fields must be filled out."); 
             return; 
         } 
@@ -81,8 +77,6 @@ function Todo() {
                 console.log(result); 
                 setEditableId(null); 
                 setEditedTask(""); 
-                setEditedStatus(""); 
-                window.location.reload(); 
             }) 
             .catch(err => console.log(err)); 
     } 
@@ -92,13 +86,36 @@ function Todo() {
     const deleteTask = (id) => { 
         axios.delete('http://127.0.0.1:3001/deleteTodoList/' + id) 
             .then(result => { 
-                console.log(result); 
-                window.location.reload(); 
+                console.log(result);
+                // Update the local todo list to remove the deleted task
+                setTodoList(todoList.filter(task => task._id !== id)); 
+                
             }) 
             .catch(err => 
                 console.log(err) 
             ) 
     } 
+
+    // Function to handle checkbox change
+    const handleCheckboxChange = (id, completed) => {
+        axios.post('http://127.0.0.1:3001/updateTodoList/' + id, { completed })
+            .then(response => {
+                console.log('Task updated:', response.data);
+                // Update the local todo list with the updated task
+                const updatedTodoList = todoList.map(task => {
+                    if (task._id === id) {
+                        return { ...task, completed };
+                    } else {
+                        return task;
+                    }
+                });
+                setTodoList(updatedTodoList);
+            })
+            .catch(error => {
+                console.error('Error updating task:', error);
+            });
+    };
+
   
     return ( 
         <div className="container mt-5"> 
@@ -109,8 +126,8 @@ function Todo() {
                         <table className={`table table-bordered rounded`}> 
                             <thead className={{theme}}> 
                                 <tr> 
-                                    <th>Task</th> 
-                                    <th>Status</th> 
+                                    <th></th>
+                                    <th>Task</th>
                                     <th>Actions</th> 
                                 </tr> 
                             </thead> 
@@ -118,6 +135,14 @@ function Todo() {
                                 <tbody className="table-group-divider"> 
                                     {todoList.map((data) => ( 
                                         <tr key={data._id}> 
+                                            <td> 
+                                                <input 
+                                                    type="checkbox"
+                                                    checked={data.completed}
+                                                    onChange={(e) => handleCheckboxChange(data._id, e.target.checked)}
+                                                />
+                                            </td>
+                                            
                                             <td> 
                                                 {editableId === data._id ? ( 
                                                     <input 
@@ -128,18 +153,6 @@ function Todo() {
                                                     /> 
                                                 ) : ( 
                                                     data.task 
-                                                )} 
-                                            </td> 
-                                            <td> 
-                                                {editableId === data._id ? ( 
-                                                    <input 
-                                                        type="text"
-                                                        className="form-control"
-                                                        value={editedStatus} 
-                                                        onChange={(e) => setEditedStatus(e.target.value)} 
-                                                    /> 
-                                                ) : ( 
-                                                    data.status 
                                                 )} 
                                             </td> 
                                             
@@ -185,15 +198,7 @@ function Todo() {
                                 onChange={(e) => setNewTask(e.target.value)} 
                             /> 
                         </div> 
-                        <div className="mb-3"> 
-                            <label>Status</label> 
-                            <input 
-                                className="form-control"
-                                type="text"
-                                placeholder="Enter Status"
-                                onChange={(e) => setNewStatus(e.target.value)} 
-                            /> 
-                        </div> 
+                        
                         <button onClick={addTask} className="btn btn-success btn-sm"> 
                             Add Task 
                         </button> 
