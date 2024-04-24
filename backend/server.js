@@ -5,7 +5,7 @@ const express = require('express')
 const mongoose = require('mongoose') 
 const cors = require('cors') 
 const TodoModel = require("./models/todoList")
-const Event = require("./models/event")
+const EventModel = require("./models/event")
 const uri = process.env.MONGODB_URI; // isn't working
 
 var app = express(); 
@@ -24,17 +24,28 @@ mongoose.connection.on("error", (error) => {
   
 // Get saved tasks from the database 
 app.get("/getTodoList", (req, res) => { 
-    TodoModel.find({}) 
+    const dateString = req.query.date;
+    if (dateString) {
+        TodoModel.find({ date: dateString }) 
         .then((todoList) => res.json(todoList)) 
         .catch((err) => res.json(err)) 
+    } else {
+        TodoModel.find()
+            .then((todoList) => res.json(todoList)) 
+            .catch((err) => res.json(err));
+    }
+
+    
 }); 
   
 // Add new task to the database 
 app.post("/addTodoList", (req, res) => { 
+    const { task, date } = req.body;
+
     TodoModel.create({ 
-        task: req.body.task, 
+        task: task,
         completed: false, 
-        deadline: req.body.deadline,  
+        date: date,
     }) 
         .then((todo) => res.json(todo)) 
         .catch((err) => res.json(err)); 
@@ -43,11 +54,11 @@ app.post("/addTodoList", (req, res) => {
 // Update task fields 
 app.post("/updateTodoList/:id", (req, res) => { 
     const id = req.params.id; 
-    const { task, completed, deadline } = req.body;
+    const { task, completed, date } = req.body;
     const updateData = { 
         task,
         completed,
-        deadline,  
+        date
     }; 
 
     TodoModel.findByIdAndUpdate(id, updateData, { new: true }) 
@@ -65,11 +76,19 @@ app.delete("/deleteTodoList/:id", (req, res) => {
 }); 
 
 // Get events
+app.get("/getEvent", (req, res) => { 
+    EventModel.find({}) 
+        .then((event) => res.json(event)) 
+        .catch((err) => res.json(err)) 
+}); 
+  
+// add event
 app.post("/addEvent", (req, res) => { 
     EventModel.create({ 
-        description: req.body.task, 
-        start: false, 
-        end: req.body.deadline,  
+        todo: req.body.todo,
+        title: req.body.title, 
+        start: req.body.start, 
+        end: req.body.end,  
     }) 
         .then((event) => res.json(event)) 
         .catch((err) => res.json(err)); 
@@ -78,9 +97,9 @@ app.post("/addEvent", (req, res) => {
 // Update event
 app.post("/updateEvent/:id", (req, res) => { 
     const id = req.params.id; 
-    const { description, start, end } = req.body;
+    const { todo, title, start, end } = req.body;
     const updateData = { 
-        description, start, end  
+        todo, title, start, end  
     }; 
 
     EventModel.findByIdAndUpdate(id, updateData, { new: true }) 

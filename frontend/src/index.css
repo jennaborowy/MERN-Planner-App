@@ -6,6 +6,15 @@
   background-image: linear-gradient(to bottom, #434343, #1b1b1b);
 }
 
+.todo-modal {
+  position: fixed;
+  top: 20%;
+  left: 30%;
+  padding: 20px;
+  z-index: 1000 ;
+
+}
+
 .overflow-fix {
   background-color: tansparent;
   overflow: auto;

@@ -3,21 +3,23 @@ import React from "react";
 import { useEffect, useState, useContext } from "react"; 
 import { ThemeContext } from "./ThemeContext";
 
-function Todo() { 
-    const [todoList, setTodoList] = useState([]); 
+function Todo({ selectedDate, todoList, setTodoList, deleteTask }) { 
     const [editableId, setEditableId] = useState(null); 
     const [editedTask, setEditedTask] = useState(""); 
     const [newTask, setNewTask] = useState(""); 
+    //const [newStart, setNewStart] = useState(null);
+    //const [newEnd, setNewEnd] = useState(null);
     const { theme } = useContext(ThemeContext);
     
-    // Fetch tasks from database 
+    // Fetch TodoList for chosen day 
     useEffect(() => { 
-        axios.get('http://127.0.0.1:3001/getTodoList') 
+        const dateString = `${selectedDate.getFullYear()}-${selectedDate.getMonth() + 1}-${selectedDate.getDate()}`;
+        axios.get(`http://127.0.0.1:3001/getTodoList?date=${dateString}`) 
             .then(result => { 
                 setTodoList(result.data) 
             }) 
             .catch(err => console.log(err)) 
-    }, []) 
+    }, [selectedDate, setTodoList]) 
   
     // Function to toggle the editable state for a specific row 
     const toggleEditable = (id) => { 
@@ -29,10 +31,8 @@ function Todo() {
         } else { 
             setEditableId(null); 
             setEditedTask(""); 
-            
         } 
     }; 
-  
   
     // Function to add task to the database 
     const addTask = (e) => {
@@ -43,15 +43,16 @@ function Todo() {
         }
 
         axios
-            .post('http://127.0.0.1:3001/addTodoList', { task: newTask, completed: false })
+            .post('http://127.0.0.1:3001/addTodoList', { 
+                task: newTask, 
+                completed: false, 
+                date: new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate()),
+            })
             .then((res) => {
                 console.log(res);
-
                 // Update the task list state instead of reloading the page
                 // Fetch the updated task list from the server
-                axios.get('http://127.0.0.1:3001/getTodoList').then((result) => {
-                    setTodoList(result.data);
-                }).catch(err => console.log(err));
+                setTodoList([...todoList, res.data]);
 
                 // Reset the form inputs
                 setNewTask('');
@@ -80,21 +81,6 @@ function Todo() {
             }) 
             .catch(err => console.log(err)); 
     } 
-  
-  
-    // Delete task from database 
-    const deleteTask = (id) => { 
-        axios.delete('http://127.0.0.1:3001/deleteTodoList/' + id) 
-            .then(result => { 
-                console.log(result);
-                // Update the local todo list to remove the deleted task
-                setTodoList(todoList.filter(task => task._id !== id)); 
-                
-            }) 
-            .catch(err => 
-                console.log(err) 
-            ) 
-    } 
 
     // Function to handle checkbox change
     const handleCheckboxChange = (id, completed) => {
@@ -116,7 +102,10 @@ function Todo() {
             });
     };
 
-  
+    const handleDeleteTask = (id) => {
+        deleteTask(id);
+    }
+
     return ( 
         <div className="container mt-5"> 
             <div className="row"> 
@@ -167,7 +156,7 @@ function Todo() {
                                                         Edit 
                                                     </button> 
                                                 )} 
-                                                <button className="btn btn-danger btn-sm ml-1" onClick={() => deleteTask(data._id)}> 
+                                                <button className="btn btn-danger btn-sm ml-1" onClick={() => handleDeleteTask(data._id)}> 
                                                     Delete 
                                                 </button> 
                                             </td> 
@@ -195,16 +184,15 @@ function Todo() {
                                 className="form-control"
                                 type="text"
                                 placeholder="Enter Task"
+                                value={newTask}
                                 onChange={(e) => setNewTask(e.target.value)} 
                             /> 
                         </div> 
-                        
                         <button onClick={addTask} className="btn btn-success btn-sm"> 
                             Add Task 
                         </button> 
                     </form> 
                 </div> 
-
             </div> 
         </div> 
     )               

@@ -11,9 +11,10 @@ const todoSchema = new mongoose.Schema({
         type: Boolean, 
         required: true, 
     }, 
-    deadline: { 
-        type: Date, 
-    }, 
+    date: {
+        type: Date,
+        required: true,
+    }
 }); 
   
   
