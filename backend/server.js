@@ -1,21 +1,19 @@
 //server.js 
   
-require('dotenv').config({ path: "/MERN-webdev-project/config.env" });
+require('dotenv').config({ path: "../config.env" });
 const express = require('express') 
 const mongoose = require('mongoose') 
 const cors = require('cors') 
 const TodoModel = require("./models/todoList")
 const EventModel = require("./models/event")
-const uri = process.env.MONGODB_URI; // isn't working
+const uri = process.env.MONGODB_URI; 
 
 var app = express(); 
 app.use(cors()); 
 app.use(express.json()); 
 
-console.log(uri); // the string is undefined
-
 // Connect to your MongoDB database (replace with your database URL) 
-mongoose.connect("mongodb+srv://JennaBorowy:8jMerL0w@merncluster.yrwfeow.mongodb.net/?retryWrites=true&w=majority&appName=MERNCluster"); 
+mongoose.connect(uri); 
 
 // Check for database connection errors 
 mongoose.connection.on("error", (error) => { 
