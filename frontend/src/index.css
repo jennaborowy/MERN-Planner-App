@@ -1,25 +1,12 @@
+/* --- Overall App.js section --- */
+/* Gradient background for app, light */
 .gradient {
   background-image: linear-gradient(to bottom, #ffffff, #b4b4b4);
 }
 
+/* Gradient background for app, dark */
 .gradient.dark {
   background-image: linear-gradient(to bottom, #434343, #1b1b1b);
-}
-
-.todo-modal {
-  position: fixed;
-  top: 20%;
-  left: 30%;
-  padding: 20px;
-  z-index: 1000 ;
-
-}
-
-.overflow-fix {
-  background-color: tansparent;
-  overflow: auto;
-  padding: 20px;
-  height: 80vh;
 }
 
 /* Light theme styles for app */
@@ -50,6 +37,33 @@
   margin-top: 2%;
 }
 
+/* fix for the background during overflow, so it isn't patchy */
+.overflow-fix {
+  background-color: tansparent;
+  overflow: auto;
+  padding: 20px;
+  height: 80vh;
+}
+
+/* --- Todo Modal styles --- */ 
+/* Line between day and rest of Modal */
+.divider {
+  height: 1px;
+  background-color: #ccc;
+}
+
+/* Overall modal style */
+.todo-modal {
+  position: fixed;
+  top: 20%;
+  left: 20%;
+  right: 20%;
+  padding: 20px;
+  z-index: 1000;
+}
+
+/* --- Toggle Button styles --- */
+/* light toggle */
 .toggle-button.light {
   margin: 0 px;
   padding: 5px;
@@ -59,6 +73,7 @@
   font-size: 1.5rem;
 }
 
+/* dark toggle */
 .toggle-button.dark {
   margin: 0 5px;
   padding: 10px;
@@ -72,15 +87,18 @@
 
 }
 
+/* --- Light/Dark Mode Button Styles --- */
+/* hover during light */
 .theme-button:not(.active):hover {
   background-color: #f0f0f0;
 }
 
+/* hover during dark */
 .theme-button.dark:not(.active):hover {
   background-color: #444;
 }
 
-  /* Base style for FullCalendar */
+/* --- Base styles for FullCalendar --- */
 .fc {
   background-color: var(--fc-bg-color);
   color: var(--fc-text-color);

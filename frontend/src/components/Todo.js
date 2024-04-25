@@ -7,8 +7,6 @@ function Todo({ selectedDate, todoList, setTodoList, deleteTask }) {
     const [editableId, setEditableId] = useState(null); 
     const [editedTask, setEditedTask] = useState(""); 
     const [newTask, setNewTask] = useState(""); 
-    //const [newStart, setNewStart] = useState(null);
-    //const [newEnd, setNewEnd] = useState(null);
     const { theme } = useContext(ThemeContext);
     
     // Fetch TodoList for chosen day 
@@ -110,7 +108,7 @@ function Todo({ selectedDate, todoList, setTodoList, deleteTask }) {
         <div className="container mt-5"> 
             <div className="row"> 
                 <div className="col-md-7"> 
-                    <h2 className="text-center">Todo List</h2> 
+                    <h2>Todo List</h2> 
                     <div className="table-responsive"> 
                         <table className={`table table-bordered rounded`}> 
                             <thead className={{theme}}> 
@@ -131,7 +129,6 @@ function Todo({ selectedDate, todoList, setTodoList, deleteTask }) {
                                                     onChange={(e) => handleCheckboxChange(data._id, e.target.checked)}
                                                 />
                                             </td>
-                                            
                                             <td> 
                                                 {editableId === data._id ? ( 
                                                     <input 
@@ -143,9 +140,7 @@ function Todo({ selectedDate, todoList, setTodoList, deleteTask }) {
                                                 ) : ( 
                                                     data.task 
                                                 )} 
-                                            </td> 
-                                            
-
+                                            </td>                                        
                                             <td> 
                                                 {editableId === data._id ? ( 
                                                     <button className="btn btn-success btn-sm" onClick={() => saveEditedTask(data._id)}> 
@@ -170,14 +165,12 @@ function Todo({ selectedDate, todoList, setTodoList, deleteTask }) {
                                     </tr> 
                                 </tbody> 
                             )} 
-
-
                         </table> 
                     </div> 
                 </div> 
                 <div className="col-md-5"> 
-                    <h2 className="text-center">Add Task</h2> 
-                    <form className={`border border-${theme} rounded p-4`}> 
+                    <h2>Add Task</h2> 
+                    <form> 
                         <div className="mb-3"> 
                             <label>Task</label> 
                             <input 
