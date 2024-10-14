@@ -26,7 +26,7 @@ For my purposes, I used a MongoDB Atlas cluster. This contains an events collect
 ## To use:
 - [install](https://nodejs.org/en) Node and NPM if you don't have them
 - clone this repo
-- go to the repo directory
+- go to the repo directory (root)
 - run ```npm install```
 - now go to the frontend directory
 - run ```npm install```
@@ -41,4 +41,5 @@ Now we should be able to start the app!
 - open another terminal
 - go to the frontend directory
 - run ```npm start```
+  
 Now the app should open in your browser at localhost:3000!
