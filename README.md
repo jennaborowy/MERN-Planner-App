@@ -1,5 +1,5 @@
 # MERN Planner Project
-This project was created for my web programming class in Spring 2024, in which we learned how to build a MERN (MongoDB, Express, React, Node) application.
+This project is my first MERN (MongoDB, Express, React, Node) application. I chose to make a web planner.
 
 ## My app includes:
 - a calendar, which was built using [FullCalendar](https://fullcalendar.io/docs) for React
