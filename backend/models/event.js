@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
 
 const eventSchema = new mongoose.Schema({
-    description: { 
-        type: String, 
+    todo: {
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: "todoList",
         required: true
     },
     start: { 
@@ -19,6 +20,6 @@ const eventSchema = new mongoose.Schema({
     } // Optional, if you want to link to a user
 });
 
-const Event = mongoose.model('event', eventSchema);
+const event = mongoose.model('event', eventSchema);
 
 module.exports = event;

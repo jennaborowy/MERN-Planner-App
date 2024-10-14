@@ -90,7 +90,6 @@ function App() {
               theme={theme}
             />
           )}
-        
       </div>
     </div>
   ); 
