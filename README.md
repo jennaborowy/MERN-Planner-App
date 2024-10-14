@@ -21,7 +21,7 @@ This project is my first MERN (MongoDB, Express, React, Node) application. I cho
 - an overall improvement to the UI
 
 ## Database Connection:
-For my purposes, I used a MongoDB Atlas cluster. This contains an events collection and a todos collection
+For my purposes, I used a MongoDB Atlas cluster. This contains an events collection and a todos collection.
 
 ## To use:
 - [install](https://nodejs.org/en) Node and NPM if you don't have them
