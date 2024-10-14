@@ -24,11 +24,21 @@ This project was created for my web programming class in Spring 2024, in which w
 For my purposes, I used a MongoDB Atlas cluster. This contains an events collection and a todos collection
 
 ## To use:
-- [install](https://nodejs.org/en) Node and NPM
+- [install](https://nodejs.org/en) Node and NPM if you don't have them
 - clone this repo
 - go to the repo directory
 - run ```npm install```
+- now go to the frontend directory
+- run ```npm install```
+- leave the frontend directory to go the backend directory
+- you guessed it... run ```npm install```
 - [Make](https://www.mongodb.com/docs/atlas/tutorial/create-new-cluster/?msockid=2b00b33a7b60689e15eaa7f57aa26956)/use a MongoDB cluster
 - [Copy](https://www.mongodb.com/docs/manual/reference/connection-string/#:~:text=If%20you%20selected%20a%20tool%2C%20download%20the%20tool.,the%20connection%20string%20with%20the%20database%20user%27s%20credentials.?msockid=2b00b33a7b60689e15eaa7f57aa26956) your uri connection string
 - Make a config.env file in the root directory with a MONGODB_URI variable, and assign your uri connection string to it
+Now we should be able to start the app!
+- go back into the backend directory
 - run ```npm start```
+- open another terminal
+- go to the frontend directory
+- run ```npm start```
+Now the app should open in your browser at localhost:3000!
