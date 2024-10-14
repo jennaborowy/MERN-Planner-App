@@ -24,7 +24,11 @@ This project was created for my web programming class in Spring 2024, in which w
 For my purposes, I used a MongoDB Atlas cluster. This contains an events collection and a todos collection
 
 ## To use:
-If you clone this repo, you should:
+- [install](https://nodejs.org/en) Node and NPM
+- clone this repo
+- go to the repo directory
+- run ```npm install```
 - [Make](https://www.mongodb.com/docs/atlas/tutorial/create-new-cluster/?msockid=2b00b33a7b60689e15eaa7f57aa26956)/use a MongoDB cluster
 - [Copy](https://www.mongodb.com/docs/manual/reference/connection-string/#:~:text=If%20you%20selected%20a%20tool%2C%20download%20the%20tool.,the%20connection%20string%20with%20the%20database%20user%27s%20credentials.?msockid=2b00b33a7b60689e15eaa7f57aa26956) your uri connection string
 - Make a config.env file in the root directory with a MONGODB_URI variable, and assign your uri connection string to it
+- run ```npm start```
