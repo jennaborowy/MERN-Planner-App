@@ -37,6 +37,7 @@ For my purposes, I used a MongoDB Atlas cluster. This contains an events collect
 - make a config.env file in the root directory with a MONGODB_URI variable, and assign your uri connection string to it
 
 Now we should be able to start the app!
+### Running the App
 - go back into the backend directory
 - run ```npm start```
 - open another terminal
