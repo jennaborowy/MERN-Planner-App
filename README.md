@@ -8,6 +8,12 @@ This project is my first MERN (MongoDB, Express, React, Node) application. I cho
   - uses CRUD operations
 - task visibility from the calendar view
 - toggleable light/dark modes
+### Images
+![Light mode](https://github.com/user-attachments/assets/768a3528-fe91-4596-b9bf-7ecfcecadddd)
+![Dark mode](https://github.com/user-attachments/assets/3fe0338d-de97-48ea-ac4b-c33db0fa0a0e)
+![Example task list](https://github.com/user-attachments/assets/5a00642b-edae-47d4-8fa0-3458fdc0f86d)
+![Adding to task list](https://github.com/user-attachments/assets/0af8cbdf-1fb5-4188-89d5-6e4b5354de04)
+![Calendar after adding to task list](https://github.com/user-attachments/assets/0bd56513-134e-4779-96db-279aa0e71ae3)
 
 ## What I would like to add in my free time:
 - events (tasks covering more than one day)
