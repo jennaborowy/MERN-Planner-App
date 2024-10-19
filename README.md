@@ -24,14 +24,16 @@ This project is my first MERN (MongoDB, Express, React, Node) application. I cho
 For my purposes, I used a MongoDB Atlas cluster. This contains an events collection and a todos collection.
 
 ## To use:
+### Prerequisites
 - [install](https://nodejs.org/en) Node and NPM if you don't have them
+- [make](https://www.mongodb.com/docs/atlas/tutorial/create-new-cluster/?msockid=2b00b33a7b60689e15eaa7f57aa26956)/use a MongoDB cluster
+### Steps
 - clone this repo
 - inside the project directory, navigate to the "frontend" directory
 - run ```npm install```
 - leave the "frontend" directory to go to the "backend" directory
 - run ```npm install```
-- [make](https://www.mongodb.com/docs/atlas/tutorial/create-new-cluster/?msockid=2b00b33a7b60689e15eaa7f57aa26956)/use a MongoDB cluster
-- [copy](https://www.mongodb.com/docs/manual/reference/connection-string/#:~:text=If%20you%20selected%20a%20tool%2C%20download%20the%20tool.,the%20connection%20string%20with%20the%20database%20user%27s%20credentials.?msockid=2b00b33a7b60689e15eaa7f57aa26956) your uri connection string
+- [copy](https://www.mongodb.com/docs/manual/reference/connection-string/#:~:text=If%20you%20selected%20a%20tool%2C%20download%20the%20tool.,the%20connection%20string%20with%20the%20database%20user%27s%20credentials.?msockid=2b00b33a7b60689e15eaa7f57aa26956) your uri connection string from your MongoDB cluster
 - make a config.env file in the root directory with a MONGODB_URI variable, and assign your uri connection string to it
 
 Now we should be able to start the app!
