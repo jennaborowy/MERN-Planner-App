@@ -9,7 +9,7 @@ This project is my first MERN (MongoDB, Express, React, Node) application. I cho
 - task visibility from the calendar view
 - toggleable light/dark modes
 
-## What I would like to add in my free time (which is rare):
+## What I would like to add in my free time:
 - events (tasks covering more than one day)
 - tasks/events having start/end times
 - users
